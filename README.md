@@ -152,17 +152,17 @@ git checkout -b feature/tela-dashboard
 ## 🔁 Fluxo completo de trabalho
 
 ```
-main (estável)
+develop (estável)
   │
-  ├─── feature/tela-login       ← você trabalha aqui
+  ├─── feature/tela-login      
   ├─── feature/tela-dashboard
   └─── feature/tela-listagem
 ```
 
 ```bash
-# ① Atualize a main
-git checkout main
-git pull origin main
+# ① Atualize a develop
+git checkout develop
+git pull origin develop
 
 # ② Crie sua branch
 git checkout -b feature/tela-<nome>
@@ -174,7 +174,7 @@ git commit -m "feat: descreva o que foi feito"
 # ④ Suba sua branch
 git push origin feature/tela-<nome>
 
-# ⑤ Abra um Pull Request → main no GitHub
+# ⑤ Abra um Pull Request → develop no GitHub
 ```
 
 ---
