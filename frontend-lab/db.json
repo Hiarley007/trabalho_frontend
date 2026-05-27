@@ -1,0 +1,30 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "nome": "Hiarley",
+      "email": "hiarley@email.com",
+      "senha": "123456"
+    }
+  ],
+  "transacoes": [
+    { "id": 1,  "usuarioId": 1, "data": "2024-05-05", "valor": 7000, "tipo": "receita", "categoria": "Receitas",    "desc": "Salário"       },
+{ "id": 2,  "usuarioId": 1, "data": "2024-05-05", "valor": 5000, "tipo": "despesa", "categoria": "Moradia",     "desc": "Aluguel"       },
+{ "id": 3,  "usuarioId": 1, "data": "2024-05-04", "valor": 300,  "tipo": "despesa", "categoria": "Alimentação", "desc": "Mercado"       },
+{ "id": 4,  "usuarioId": 1, "data": "2024-05-02", "valor": 500,  "tipo": "despesa", "categoria": "Transporte",  "desc": "Combustível"   },
+{ "id": 5,  "usuarioId": 1, "data": "2024-05-03", "valor": 750,  "tipo": "receita", "categoria": "Receitas",    "desc": "Freelancer"    },
+{ "id": 6,  "usuarioId": 1, "data": "2024-05-01", "valor": 800,  "tipo": "despesa", "categoria": "Lazer",       "desc": "Viagem"        },
+{ "id": 7,  "usuarioId": 1, "data": "2024-05-04", "valor": 600,  "tipo": "despesa", "categoria": "Saúde",       "desc": "Plano de Saúde"},
+{ "id": 8,  "usuarioId": 1, "data": "2024-05-06", "valor": 150,  "tipo": "despesa", "categoria": "Outros",      "desc": "Curso Online"  },
+{ "id": 9,  "usuarioId": 1, "data": "2024-04-25", "valor": 2000, "tipo": "receita", "categoria": "Receitas",    "desc": "Bônus"         },
+{ "id": 10, "usuarioId": 1, "data": "2024-04-20", "valor": 400,  "tipo": "despesa", "categoria": "Alimentação", "desc": "Restaurante"   },
+{ "id": 11, "usuarioId": 1, "data": "2024-04-15", "valor": 1800, "tipo": "receita", "categoria": "Receitas",    "desc": "Salário Extra" },
+{ "id": 12, "usuarioId": 1, "data": "2024-04-10", "valor": 250,  "tipo": "despesa", "categoria": "Saúde",       "desc": "Farmácia"      },
+{ "id": 13, "usuarioId": 1, "data": "2024-04-08", "valor": 180,  "tipo": "despesa", "categoria": "Lazer",       "desc": "Cinema"        },
+{ "id": 14, "usuarioId": 1, "data": "2024-04-05", "valor": 320,  "tipo": "despesa", "categoria": "Transporte",  "desc": "Uber"          },
+{ "id": 15, "usuarioId": 1, "data": "2024-04-01", "valor": 1200, "tipo": "despesa", "categoria": "Moradia",     "desc": "Condomínio"    },
+{ "id": 14, "usuarioId": 1, "data": "2024-04-05", "valor": 320,  "tipo": "despesa", "categoria": "Transporte",  "desc": "Uber"          },
+{ "id": 15, "usuarioId": 1, "data": "2024-04-01", "valor": 1200, "tipo": "despesa", "categoria": "Moradia",     "desc": "Condomínio"    }
+
+  ]
+}
