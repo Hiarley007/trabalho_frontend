@@ -14,7 +14,7 @@ Visualize saldos, gerencie transações e acompanhe seus gastos com gráficos in
 
 ### 👥 Equipe
 
-| [Breno Rocha](https://github.com/) | [Káthia Faria](https://github.com/) | [Hiarley Rabêlo](https://github.com/) | [Ricardo Wesgueber](https://github.com/) |
+| [Breno Rocha](https://github.com/brenobran) | [Káthia Faria](https://github.com/kathiamf) | [Hiarley Rabêlo](https://github.com/Hiarley007) | [Ricardo Wesgueber](https://github.com/ricardowgb) |
 |:---:|:---:|:---:|:---:|
 
 </div>
