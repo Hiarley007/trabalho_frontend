@@ -116,9 +116,9 @@ feature/tela-<nome-da-tela>
 ### Como criar sua branch
 
 ```bash
-# 1. Sempre parta de uma main atualizada
-git checkout main
-git pull origin main
+# 1. Sempre parta da develop atualizada
+git checkout develop
+git pull origin develop
 
 # 2. Crie e acesse a nova branch
 git checkout -b feature/tela-dashboard
