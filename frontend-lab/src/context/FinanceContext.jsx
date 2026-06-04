@@ -9,8 +9,6 @@ export function FinanceProvider({ children }) {
   const [transacoes, setTransacoes] = useState([]);
   const [loading, setLoading]       = useState(true);
 
-  // Busca as transações do usuário na API
-  // trocar o 1 pelo id do usuário logado quando o AuthContext estiver pronto
   useEffect(() => {
     async function fetchTransacoes() {
       try {
@@ -27,7 +25,12 @@ export function FinanceProvider({ children }) {
     fetchTransacoes();
   }, []);
 
-  // Categorias calculadas com base nas transações reais
+  // ✅ Corrigido: usa split para evitar bug de fuso horário
+  const getMes = (dataStr) => {
+    const [, mes] = dataStr.split("-");
+    return parseInt(mes, 10) - 1; // mês base 0 igual ao Date
+  };
+
   const categorias = useMemo(() => {
     const mapa = {
       Moradia:     { cor: "#2563eb" },
@@ -38,7 +41,6 @@ export function FinanceProvider({ children }) {
       Outros:      { cor: "#16a34a" },
     };
 
-    // soma os gastos de cada categoria
     transacoes
       .filter(t => t.tipo === "despesa")
       .forEach(t => {
@@ -50,7 +52,6 @@ export function FinanceProvider({ children }) {
     const totalGeral = Object.values(mapa)
       .reduce((soma, c) => soma + (c.total || 0), 0);
 
-    // retorna array com percentual calculado automaticamente
     return Object.entries(mapa).map(([nome, c]) => ({
       nome,
       cor: c.cor,
@@ -60,15 +61,15 @@ export function FinanceProvider({ children }) {
     }));
   }, [transacoes]);
 
-  // Funções auxiliares
   const somarPorTipo = (tipo) =>
     transacoes
       .filter(t => t.tipo === tipo)
       .reduce((soma, t) => soma + t.valor, 0);
 
+  // ✅ Corrigido: usa getMes em vez de new Date().getMonth()
   const somarPorTipoMes = (tipo, mes) =>
     transacoes
-      .filter(t => t.tipo === tipo && new Date(t.data).getMonth() === mes)
+      .filter(t => t.tipo === tipo && getMes(t.data) === mes)
       .reduce((soma, t) => soma + t.valor, 0);
 
   const calcularPercentual = (atual, anterior) => {
@@ -76,12 +77,10 @@ export function FinanceProvider({ children }) {
     return (((atual - anterior) / Math.abs(anterior)) * 100).toFixed(1);
   };
 
-  // Totais gerais
   const totalReceitas = useMemo(() => somarPorTipo("receita"), [transacoes]);
   const totalDespesas = useMemo(() => somarPorTipo("despesa"), [transacoes]);
   const saldo         = useMemo(() => totalReceitas - totalDespesas, [totalReceitas, totalDespesas]);
 
-  // Percentuais vs mês anterior
   const percentualReceitas = useMemo(() => {
     const mes = new Date().getMonth();
     return calcularPercentual(somarPorTipoMes("receita", mes), somarPorTipoMes("receita", mes - 1));

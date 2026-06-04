@@ -12,7 +12,7 @@ function App () {
      <Route path="/" element={<Layout />}>
         <Route index element={<Dashboard />}/>
         <Route path="cadastro" element={<CadastroTransition />}/>
-        <Route path="listagem" element={<ListagemTransition />}/>
+        <Route path="listagem" element={<ListagemTransition />}/> 
      </Route>
         
     <Route path="/login" element={<Login />} />
