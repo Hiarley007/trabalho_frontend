@@ -135,7 +135,7 @@ git checkout -b feature/tela-dashboard
 ```
 <tipo>: mensagem curta descrevendo o que foi feito
 ```
-
+ 
 ### Tipos disponíveis
 
 | Tipo | Quando usar | Exemplo |
