@@ -25,10 +25,9 @@ function FinanceProvider({ children }) {
     fetchTransacoes();
   }, []);
 
-  // ✅ Corrigido: usa split para evitar bug de fuso horário
   const getMes = (dataStr) => {
     const [, mes] = dataStr.split("-");
-    return parseInt(mes, 10) - 1; // mês base 0 igual ao Date
+    return parseInt(mes, 10) - 1;
   };
 
   const categorias = useMemo(() => {
@@ -61,39 +60,51 @@ function FinanceProvider({ children }) {
     }));
   }, [transacoes]);
 
-  const somarPorTipo = (tipo) =>
+  const totalReceitas = useMemo(() =>
     transacoes
-      .filter(t => t.tipo === tipo)
-      .reduce((soma, t) => soma + t.valor, 0);
+      .filter(t => t.tipo === "receita")
+      .reduce((soma, t) => soma + t.valor, 0)
+  , [transacoes]);
 
-  const somarPorTipoMes = (tipo, mes) =>
+  const totalDespesas = useMemo(() =>
     transacoes
-      .filter(t => t.tipo === tipo && getMes(t.data) === mes)
-      .reduce((soma, t) => soma + t.valor, 0);
+      .filter(t => t.tipo === "despesa")
+      .reduce((soma, t) => soma + t.valor, 0)
+  , [transacoes]);
+
+  const saldo = useMemo(() => totalReceitas - totalDespesas, [totalReceitas, totalDespesas]);
 
   const calcularPercentual = (atual, anterior) => {
     if (anterior === 0) return "0.0";
     return (((atual - anterior) / Math.abs(anterior)) * 100).toFixed(1);
   };
 
-  const totalReceitas = useMemo(() => somarPorTipo("receita"), [transacoes]);
-  const totalDespesas = useMemo(() => somarPorTipo("despesa"), [transacoes]);
-  const saldo         = useMemo(() => totalReceitas - totalDespesas, [totalReceitas, totalDespesas]);
-
   const percentualReceitas = useMemo(() => {
     const mes = new Date().getMonth();
-    return calcularPercentual(somarPorTipoMes("receita", mes), somarPorTipoMes("receita", mes - 1));
+    const somarMes = (tipo, m) =>
+      transacoes
+        .filter(t => t.tipo === tipo && getMes(t.data) === m)
+        .reduce((soma, t) => soma + t.valor, 0);
+    return calcularPercentual(somarMes("receita", mes), somarMes("receita", mes - 1));
   }, [transacoes]);
 
   const percentualDespesas = useMemo(() => {
     const mes = new Date().getMonth();
-    return calcularPercentual(somarPorTipoMes("despesa", mes), somarPorTipoMes("despesa", mes - 1));
+    const somarMes = (tipo, m) =>
+      transacoes
+        .filter(t => t.tipo === tipo && getMes(t.data) === m)
+        .reduce((soma, t) => soma + t.valor, 0);
+    return calcularPercentual(somarMes("despesa", mes), somarMes("despesa", mes - 1));
   }, [transacoes]);
 
   const percentualSaldo = useMemo(() => {
     const mes = new Date().getMonth();
-    const saldoAtual    = somarPorTipoMes("receita", mes)     - somarPorTipoMes("despesa", mes);
-    const saldoAnterior = somarPorTipoMes("receita", mes - 1) - somarPorTipoMes("despesa", mes - 1);
+    const somarMes = (tipo, m) =>
+      transacoes
+        .filter(t => t.tipo === tipo && getMes(t.data) === m)
+        .reduce((soma, t) => soma + t.valor, 0);
+    const saldoAtual    = somarMes("receita", mes)     - somarMes("despesa", mes);
+    const saldoAnterior = somarMes("receita", mes - 1) - somarMes("despesa", mes - 1);
     return calcularPercentual(saldoAtual, saldoAnterior);
   }, [transacoes]);
 
@@ -115,4 +126,4 @@ function FinanceProvider({ children }) {
   );
 }
 
-export { FinanceProvider, FinanceContext }
+export { FinanceProvider, FinanceContext };
