@@ -130,7 +130,7 @@ git checkout -b feature/tela-dashboard
 
 > Mensagens de commit devem ser **curtas, no imperativo e com um prefixo de tipo**.
 
-### Formato
+### Formato 
 
 ```
 <tipo>: mensagem curta descrevendo o que foi feito
