@@ -1,5 +1,5 @@
 import { XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart } from "recharts";
-import { useFinance } from "../context/FinanceContext";
+import { useFinance } from "../hooks/useFinance";
 
 function GraficoSaldo() {
   const { transacoes, loading } = useFinance();

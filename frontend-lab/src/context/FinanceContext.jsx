@@ -1,10 +1,10 @@
-import { createContext, useContext, useState, useEffect, useMemo } from "react";
+import { createContext, useState, useEffect, useMemo } from "react";
 
 const FinanceContext = createContext();
 
 const API_URL = "http://localhost:3000";
 
-export function FinanceProvider({ children }) {
+function FinanceProvider({ children }) {
 
   const [transacoes, setTransacoes] = useState([]);
   const [loading, setLoading]       = useState(true);
@@ -66,7 +66,6 @@ export function FinanceProvider({ children }) {
       .filter(t => t.tipo === tipo)
       .reduce((soma, t) => soma + t.valor, 0);
 
-  // ✅ Corrigido: usa getMes em vez de new Date().getMonth()
   const somarPorTipoMes = (tipo, mes) =>
     transacoes
       .filter(t => t.tipo === tipo && getMes(t.data) === mes)
@@ -116,6 +115,4 @@ export function FinanceProvider({ children }) {
   );
 }
 
-export function useFinance() {
-  return useContext(FinanceContext);
-}
+export { FinanceProvider, FinanceContext }

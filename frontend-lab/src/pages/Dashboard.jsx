@@ -2,7 +2,7 @@ import Main from "../components/Main";
 import Card from "../components/Card";
 import GraficoPizza from "../components/GraficoPizza";
 import GraficoSaldo from "../components/GraficoSaldo";
-import { useFinance } from "../context/FinanceContext";
+import { useFinance } from "../hooks/useFinance";
 import ResumoTransition from "../components/ResumoTrasition";
 
 function Dashboard() {

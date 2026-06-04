@@ -1,5 +1,5 @@
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
-import { useFinance } from "../context/FinanceContext";
+import { useFinance } from "../hooks/useFinance";
 import { useNavigate } from "react-router";
 
 function GraficoPizza() {
