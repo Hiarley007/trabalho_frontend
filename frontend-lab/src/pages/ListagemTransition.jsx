@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Main from "../components/Main";
+import { listar, remover } from "../services/transacaoService";
 
-const API_URL = "http://localhost:3000";
 const ITENS_POR_PAGINA = 7;
 
 const CATEGORIAS = [
@@ -28,34 +28,25 @@ function ListagemTransition() {
 
   // ─── Carregar transações ao montar ───────────────────────────────────────────
   useEffect(() => {
-    const carregar = async () => {
-      try {
-        const resposta = await fetch(`${API_URL}/transacoes?usuarioId=1`);
-        const dados = await resposta.json();
-        setTransacoes(dados);
-      } catch (erro) {
-        console.error("Erro ao buscar transações:", erro);
-      } finally {
-        setCarregando(false);
-      }
-    };
-
-    carregar();
-  }, []);
+  const carregar = async () => {
+    try {
+      const dados = await listar(usuario?.token);
+      setTransacoes(dados);
+    } catch (erro) {
+      console.error("Erro ao buscar transações:", erro);
+    } finally {
+      setCarregando(false);
+    }
+  };
+  carregar();
+}, []);
 
   // ─── Remover transação ────────────────────────────────────────────────────────
   const trataRemover = async (transacao) => {
-    if (!confirm(`Deseja excluir "${transacao.desc}"?`)) return;
-
-    try {
-      await fetch(`${API_URL}/transacoes/${transacao.id}`, {
-        method: "DELETE",
-      });
-      setTransacoes(transacoes.filter((item) => item.id !== transacao.id));
-    } catch (erro) {
-      console.error("Erro ao remover transação:", erro);
-    }
-  };
+  if (!confirm(`Deseja excluir "${transacao.desc}"?`)) return;
+  await remover(transacao);
+  setTransacoes(transacoes.filter((item) => item.id !== transacao.id));
+};
 
   // ─── Filtros ──────────────────────────────────────────────────────────────────
 
