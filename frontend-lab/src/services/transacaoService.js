@@ -1,5 +1,5 @@
 const url = "http://localhost:3000/transacoes";
- 
+
 // POST /
 async function criar(transacao) {
   try {
@@ -13,7 +13,7 @@ async function criar(transacao) {
     return { message: `Deu ruim! ${error.code}-${error.message}` };
   }
 }
- 
+
 // GET /id
 async function obter(transacao) {
   try {
@@ -23,22 +23,18 @@ async function obter(transacao) {
     return { message: `Deu ruim! ${error.code}-${error.message}` };
   }
 }
- 
+
 // GET /
 async function listar(token) {
-  if (!token) {
-    throw new Error("401 - Não Autorizado");
-  }
   try {
-    const resposta = await fetch(url, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const resposta = await fetch(`${url}?usuarioId=1`, { headers });
     return await resposta.json();
   } catch (error) {
     return { message: `Deu ruim! ${error.code}-${error.message}` };
   }
 }
- 
+
 // PUT /id
 async function atualizar(transacao) {
   try {
@@ -52,7 +48,7 @@ async function atualizar(transacao) {
     return { message: `Deu ruim! ${error.code}-${error.message}` };
   }
 }
- 
+
 // DELETE /id
 async function remover(transacao) {
   try {
@@ -64,5 +60,5 @@ async function remover(transacao) {
     return { message: `Deu ruim! ${error.code}-${error.message}` };
   }
 }
- 
+
 export { criar, obter, listar, atualizar, remover };

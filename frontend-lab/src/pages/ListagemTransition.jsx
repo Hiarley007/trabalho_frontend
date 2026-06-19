@@ -28,25 +28,31 @@ function ListagemTransition() {
 
   // ─── Carregar transações ao montar ───────────────────────────────────────────
   useEffect(() => {
-  const carregar = async () => {
-    try {
-      const dados = await listar(usuario?.token);
-      setTransacoes(dados);
-    } catch (erro) {
-      console.error("Erro ao buscar transações:", erro);
-    } finally {
-      setCarregando(false);
-    }
-  };
-  carregar();
-}, []);
+    const carregar = async () => {
+      try {
+        const dados = await listar();
+        setTransacoes(Array.isArray(dados) ? dados : []);
+      } catch (erro) {
+        console.error("Erro ao buscar transações:", erro);
+        setTransacoes([]);
+      } finally {
+        setCarregando(false);
+      }
+    };
+    carregar();
+  }, []);
 
   // ─── Remover transação ────────────────────────────────────────────────────────
   const trataRemover = async (transacao) => {
-  if (!confirm(`Deseja excluir "${transacao.desc}"?`)) return;
-  await remover(transacao);
-  setTransacoes(transacoes.filter((item) => item.id !== transacao.id));
-};
+    if (!confirm(`Deseja excluir "${transacao.desc}"?`)) return;
+
+    try {
+      await remover(transacao);
+      setTransacoes(transacoes.filter((item) => item.id !== transacao.id));
+    } catch (erro) {
+      console.error("Erro ao remover transação:", erro);
+    }
+  };
 
   // ─── Filtros ──────────────────────────────────────────────────────────────────
 
