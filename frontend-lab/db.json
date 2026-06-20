@@ -36,6 +36,78 @@
       "data": "2026-06-20",
       "usuarioId": "LfyQkZzXzsw",
       "id": "NaybVWA2QUk"
+    },
+    {
+      "desc": "Dinheiro Extra",
+      "valor": 1500,
+      "categoria": "Receitas",
+      "tipo": "receita",
+      "data": "2026-06-14",
+      "usuarioId": "LfyQkZzXzsw",
+      "id": "LVPsjwlUT2g"
+    },
+    {
+      "desc": "Aluguel",
+      "valor": 2000,
+      "categoria": "Moradia",
+      "tipo": "despesa",
+      "data": "2026-06-19",
+      "usuarioId": "LfyQkZzXzsw",
+      "id": "8rSUgtOW7f4"
+    },
+    {
+      "desc": "Dinheiro Extra",
+      "valor": 2000,
+      "categoria": "Receitas",
+      "tipo": "receita",
+      "data": "2026-06-20",
+      "usuarioId": "LfyQkZzXzsw",
+      "id": "vrlngtgdfgI"
+    },
+    {
+      "desc": "Mercado",
+      "valor": 600,
+      "categoria": "Alimentação",
+      "tipo": "despesa",
+      "data": "2026-05-18",
+      "usuarioId": "LfyQkZzXzsw",
+      "id": "5w0_6NoxKXs"
+    },
+    {
+      "desc": "Academia",
+      "valor": 139.9,
+      "categoria": "Saúde",
+      "tipo": "despesa",
+      "data": "2026-06-10",
+      "usuarioId": "LfyQkZzXzsw",
+      "id": "M2B43X28V4A"
+    },
+    {
+      "desc": "Internet",
+      "valor": 132.57,
+      "categoria": "Outros",
+      "tipo": "despesa",
+      "data": "2026-06-30",
+      "usuarioId": "LfyQkZzXzsw",
+      "id": "QrpAF8IrdWk"
+    },
+    {
+      "desc": "Spotfy",
+      "valor": 12.9,
+      "categoria": "Outros",
+      "tipo": "despesa",
+      "data": "2026-06-10",
+      "usuarioId": "LfyQkZzXzsw",
+      "id": "j_D501SXoeg"
+    },
+    {
+      "desc": "Golozemas",
+      "valor": 150,
+      "categoria": "Alimentação",
+      "tipo": "despesa",
+      "data": "2026-06-14",
+      "usuarioId": "LfyQkZzXzsw",
+      "id": "vAjE_iE1z6U"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
