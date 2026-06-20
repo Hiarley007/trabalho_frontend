@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import Main from "../components/Main";
-import { listar, remover } from "../services/transacaoService";
+import { remover } from "../services/transacaoService";
+import { useFinance } from "../hooks/useFinance";
 
 const ITENS_POR_PAGINA = 7;
 
@@ -16,8 +17,7 @@ const CATEGORIAS = [
 ];
 
 function ListagemTransition() {
-  const [transacoes, setTransacoes] = useState([]);
-  const [carregando, setCarregando] = useState(true);
+  const { transacoes, setTransacoes, loading: carregando } = useFinance();
 
   const [busca, setBusca] = useState("");
   const [filtroCategoria, setFiltroCategoria] = useState("todas");
@@ -26,23 +26,6 @@ function ListagemTransition() {
 
   const navigate = useNavigate();
 
-  // ─── Carregar transações ao montar ───────────────────────────────────────────
-  useEffect(() => {
-    const carregar = async () => {
-      try {
-        const dados = await listar();
-        setTransacoes(Array.isArray(dados) ? dados : []);
-      } catch (erro) {
-        console.error("Erro ao buscar transações:", erro);
-        setTransacoes([]);
-      } finally {
-        setCarregando(false);
-      }
-    };
-    carregar();
-  }, []);
-
-  // ─── Remover transação ────────────────────────────────────────────────────────
   const trataRemover = async (transacao) => {
     if (!confirm(`Deseja excluir "${transacao.desc}"?`)) return;
 
@@ -54,9 +37,6 @@ function ListagemTransition() {
     }
   };
 
-  // ─── Filtros ──────────────────────────────────────────────────────────────────
-
-
   const transacoesFiltradas = transacoes.filter((t) => {
     const buscaOk = t.desc.toLowerCase().includes(busca.toLowerCase());
     const categoriaOk = filtroCategoria === "todas" || t.categoria === filtroCategoria;
@@ -64,7 +44,6 @@ function ListagemTransition() {
     return buscaOk && categoriaOk && tipoOk;
   });
 
-  // ─── Paginação ────────────────────────────────────────────────────────────────
   const totalPaginas = Math.ceil(transacoesFiltradas.length / ITENS_POR_PAGINA);
   const inicio = (paginaAtual - 1) * ITENS_POR_PAGINA;
   const transacoesPagina = transacoesFiltradas.slice(inicio, inicio + ITENS_POR_PAGINA);
@@ -73,7 +52,6 @@ function ListagemTransition() {
     setPaginaAtual(novaPagina);
   };
 
-  // ─── Helpers de formatação ────────────────────────────────────────────────────
   const formatarData = (dataStr) => {
     const [ano, mes, dia] = dataStr.split("-");
     return `${dia}/${mes}/${ano}`;
@@ -87,15 +65,12 @@ function ListagemTransition() {
     return tipo === "despesa" ? `-${formatado}` : formatado;
   };
 
-  // ─── Render ───────────────────────────────────────────────────────────────────
   return (
     <Main
       titulo="Listagem de Transações"
       subtitulo="Veja todas as suas receitas e despesas."
     >
-      {/* Barra de filtros */}
       <div className="flex flex-col md:flex-row gap-3 mb-6 mt-2">
-        {/* Busca */}
         <div className="relative flex-1 max-w-xs">
           <input
             type="text"
@@ -115,7 +90,6 @@ function ListagemTransition() {
           </span>
         </div>
 
-        {/* Filtro de categoria */}
         <select
           value={filtroCategoria}
           onChange={(e) => {
@@ -130,7 +104,6 @@ function ListagemTransition() {
           ))}
         </select>
 
-        {/* Filtro de tipo */}
         <select
           value={filtroTipo}
           onChange={(e) => {
@@ -144,9 +117,8 @@ function ListagemTransition() {
           <option value="despesa">Despesa</option>
         </select>
 
-        {/* Botão Nova Transação */}
         <button
-          onClick={() => navigate("/cadastro")}
+          onClick={() => navigate("/cadastro-transacao")}
           className="flex items-center gap-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors ml-auto"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -157,7 +129,6 @@ function ListagemTransition() {
         </button>
       </div>
 
-      {/* Tabela */}
       <div className="bg-white rounded-xl shadow-sm overflow-hidden">
         {carregando ? (
           <p className="text-center py-16 text-gray-400 text-sm">
@@ -201,9 +172,8 @@ function ListagemTransition() {
                       <td className="px-4 py-4 text-gray-600">{formatarData(item.data)}</td>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
-                          {/* Editar */}
                           <button
-                            onClick={() => navigate(`/cadastro?id=${item.id}`)}
+                            onClick={() => navigate(`/cadastro-transacao?id=${item.id}`)}
                             className="text-gray-400 hover:text-green-600 transition-colors"
                             title="Editar"
                           >
@@ -212,7 +182,6 @@ function ListagemTransition() {
                               <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
                             </svg>
                           </button>
-                          {/* Remover */}
                           <button
                             onClick={() => trataRemover(item)}
                             className="text-gray-400 hover:text-red-500 transition-colors"
@@ -233,7 +202,6 @@ function ListagemTransition() {
               </tbody>
             </table>
 
-            {/* Rodapé com paginação */}
             <div className="flex items-center justify-between px-6 py-4 border-t border-gray-100">
               <span className="text-sm text-gray-500">
                 {transacoesFiltradas.length === 0

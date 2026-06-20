@@ -4,8 +4,11 @@ import GraficoPizza from "../components/GraficoPizza";
 import GraficoSaldo from "../components/GraficoSaldo";
 import { useFinance } from "../hooks/useFinance";
 import ResumoTransition from "../components/ResumoTrasition";
+import { useAuth } from "../context/AuthContext";
 
 function Dashboard() {
+  const { usuarioLogado } = useAuth();
+
   const {
     transacoes,
     percentualReceitas,
@@ -24,10 +27,10 @@ function Dashboard() {
   const saldo = totalReceitas - totalDespesas;
 
   // ícones por categoria
-  
+
   return (
     <Main
-      titulo="Olá, Usuário! 👋"
+      titulo={`Olá, ${usuarioLogado?.nome || "Usuário"}! 👋`}
       subtitulo="Aqui está o resumo da sua vida financeira"
     >
       {/* Cards de resumo */}
@@ -144,10 +147,8 @@ function Dashboard() {
       <section className="grid grid-cols-1 md:grid-cols-1 gap-5 mt-5">
         <ResumoTransition />
       </section>
-
-      
     </Main>
   );
 }
 
-export default Dashboard; 
+export default Dashboard;

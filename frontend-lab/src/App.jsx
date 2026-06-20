@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider, useAuth } from "./context/AuthContext";
+import { useAuth } from "./context/AuthContext";
 import Layout from "./Layouts/Layout";
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
@@ -18,26 +18,24 @@ function RotaProtegida({ children }) {
 
 function App() {
   return (
-    <AuthProvider>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <RotaProtegida>
-              <Layout />
-            </RotaProtegida>
-          }
-        >
-          <Route index element={<Dashboard />} />
-          <Route path="cadastro-transacao" element={<CadastroTransition />} />
-          <Route path="listagem" element={<ListagemTransition />} />
-        </Route>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <RotaProtegida>
+            <Layout />
+          </RotaProtegida>
+        }
+      >
+        <Route index element={<Dashboard />} />
+        <Route path="cadastro-transacao" element={<CadastroTransition />} />
+        <Route path="listagem" element={<ListagemTransition />} />
+      </Route>
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="*" element={<Erro404 />} />
-      </Routes>
-    </AuthProvider>
+      <Route path="/login" element={<Login />} />
+      <Route path="/cadastro" element={<Cadastro />} />
+      <Route path="*" element={<Erro404 />} />
+    </Routes>
   );
 }
 

@@ -1,6 +1,9 @@
 import { Link, NavLink } from "react-router";
+import { useAuth } from "../context/AuthContext";
 
 function Menu() {
+  const { usuarioLogado } = useAuth();
+
   return (
     <nav className="flex flex-col justify-between h-full p-3">
       <ul className="list-none">
@@ -14,7 +17,7 @@ function Menu() {
           </NavLink>
         </li>
         <li className="px-3 py-2 rounded-lg hover:bg-green-600 cursor-pointer text-white mt-1">
-          <NavLink to="/cadastro" className="flex items-center gap-2">
+          <NavLink to="/cadastro-transacao" className="flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 20h9" />
               <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
@@ -46,7 +49,7 @@ function Menu() {
             </svg>
           </figure>
           <section>
-            <strong className="text-white text-sm block">Olá, Usuário!</strong>
+            <strong className="text-white text-sm block">Olá, {usuarioLogado?.nome}!</strong>
           </section>
         </address>
 
