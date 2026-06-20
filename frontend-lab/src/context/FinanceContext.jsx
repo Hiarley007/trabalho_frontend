@@ -2,7 +2,7 @@ import { createContext, useState, useEffect, useMemo } from "react";
 
 const FinanceContext = createContext();
 
-const API_URL = "http://localhost:3000";
+const API_URL = "http://localhost:3001";
 
 function FinanceProvider({ children }) {
 
