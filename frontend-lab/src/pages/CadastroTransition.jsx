@@ -108,7 +108,7 @@ function CadastroTransition() {
       if (modoEdicao) {
         const atualizada = await atualizar({ ...payload, id });
         setTransacoes(
-          transacoes.map((t) => (t.id === id ? { ...payload, id } : t))
+          transacoes.map((t) => (t.id === id ? atualizada : t))
         );
       } else {
         const criada = await criar(payload);

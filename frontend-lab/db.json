@@ -18,6 +18,24 @@
   "transacoes": [
     {
       "id": "abK0e3x1U2k"
+    },
+    {
+      "desc": "Salário",
+      "valor": 1500,
+      "categoria": "Receitas",
+      "tipo": "receita",
+      "data": "2026-06-20",
+      "usuarioId": "LfyQkZzXzsw",
+      "id": "jcR43DoWDhA"
+    },
+    {
+      "desc": "Aluguel",
+      "valor": 900,
+      "categoria": "Moradia",
+      "tipo": "despesa",
+      "data": "2026-06-20",
+      "usuarioId": "LfyQkZzXzsw",
+      "id": "NaybVWA2QUk"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
