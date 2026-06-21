@@ -261,7 +261,7 @@ function Cadastro() {
                         placeholder="(00) 00000-0000" maxLength={15} className={inputClass('telefone', true)} />
                     </span>
                     {erros.telefone && <span className="text-xs text-red-500 font-medium">{erros.telefone}</span>}
-                  </fieldset>
+                  </fieldset> 
                 </li>
 
                 <li>

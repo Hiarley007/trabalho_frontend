@@ -58,42 +58,42 @@ npm run dev
 frontend-lab/
 │
 ├── 📂 src/
-│   ├── 📂 assets/                # Imagens e recursos estáticos
+│   ├── 📂 assets/                
 │   │
-│   ├── 📂 components/            # Componentes reutilizáveis
-│   │   ├── Card.jsx              # Card genérico de conteúdo
-│   │   ├── GraficoPizza.jsx      # Gráfico de distribuição por categoria
-│   │   ├── GraficoSaldo.jsx      # Gráfico de evolução do saldo
-│   │   ├── Main.jsx              # Container principal da página
-│   │   ├── Menu.jsx              # Menu de navegação
-│   │   ├── ResumoTrasition.jsx   # Resumo animado de transações
-│   │   ├── Sidebar.jsx           # Barra lateral de navegação
-│   │   └── Topbar.jsx            # Barra superior com ações globais
+│   ├── 📂 components/            
+│   │   ├── Card.jsx              
+│   │   ├── GraficoPizza.jsx     
+│   │   ├── GraficoSaldo.jsx      
+│   │   ├── Main.jsx              
+│   │   ├── Menu.jsx             
+│   │   ├── ResumoTrasition.jsx   
+│   │   ├── Sidebar.jsx           
+│   │   └── Topbar.jsx            
 │   │
 │   ├── 📂 context/
-│   │   ├── AuthContext.jsx       # Estado global de autenticação (login/logout)
-│   │   └── FinanceContext.jsx    # Estado global das finanças (Context API)
+│   │   ├── AuthContext.jsx       
+│   │   └── FinanceContext.jsx    
 │   │
-│   ├── 📂 hooks/                 # Hooks customizados (ex: useFinance)
+│   ├── 📂 hooks/                 
 │   │
 │   ├── 📂 Layouts/
-│   │   └── Layout.jsx            # Layout base com Sidebar + Topbar
+│   │   └── Layout.jsx            
 │   │
-│   ├── 📂 pages/                 # Telas da aplicação
-│   │   ├── Login.jsx             # Autenticação
-│   │   ├── Cadastro.jsx          # Cadastro de usuário
-│   │   ├── Dashboard.jsx         # Visão geral com gráficos
-│   │   ├── CadastroTransition.jsx    # Cadastro de transação
-│   │   ├── ListagemTransition.jsx    # Listagem de transações
-│   │   └── Erro404.jsx           # Página de erro
+│   ├── 📂 pages/                 
+│   │   ├── Login.jsx             
+│   │   ├── Cadastro.jsx          
+│   │   ├── Dashboard.jsx         
+│   │   ├── CadastroTransition.jsx    
+│   │   ├── ListagemTransition.jsx    
+│   │   └── Erro404.jsx           
 │   │
-│   ├── 📂 services/              # Chamadas à API / json-server
-│   │   └── transacaoService.js   # CRUD de transações
+│   ├── 📂 services/              
+│   │   └── transacaoService.js   
 │   │
 │   ├── App.jsx
 │   └── main.jsx
 │
-├── db.json                       # Banco de dados local (json-server)
+├── db.json                       
 ├── eslint.config.js
 ├── index.html
 ├── package.json

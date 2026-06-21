@@ -80,7 +80,7 @@ export function AuthProvider({ children }) {
     setUsuarioLogado(null);
     localStorage.removeItem('usuarioLogado');
   }
-
+ 
   return (
     <AuthContext.Provider
       value={{ usuarioLogado, carregandoSessao, login, cadastrarUsuario, logout }}
