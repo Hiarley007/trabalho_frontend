@@ -149,7 +149,7 @@ function ResumoTransition() {
                 </span>
               </li>
             );
-          })
+          })  
         )}
       </ul>
     </section>

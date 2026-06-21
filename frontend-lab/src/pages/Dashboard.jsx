@@ -146,7 +146,7 @@ function Dashboard() {
 
       <section className="grid grid-cols-1 md:grid-cols-1 gap-5 mt-5">
         <ResumoTransition />
-      </section>
+      </section> 
     </Main>
   );
 }

@@ -1,6 +1,4 @@
-import { API_URL } from "./api";
-
-const url = `${API_URL}/transacoes`;
+const url = "http://localhost:3001/transacoes";
 
 // POST /
 async function criar(transacao) {
@@ -26,11 +24,10 @@ async function obter(transacao) {
   }
 }
 
-// GET /?usuarioId=
+// GET /?usuarioId=...
 async function listar(usuarioId) {
   try {
-    const query = usuarioId ? `?usuarioId=${usuarioId}` : "";
-    const resposta = await fetch(`${url}${query}`);
+    const resposta = await fetch(`${url}?usuarioId=${usuarioId}`);
     return await resposta.json();
   } catch (error) {
     return { message: `Deu ruim! ${error.code}-${error.message}` };

@@ -14,7 +14,7 @@ const CATEGORIAS = [
   "Receitas",
 ];
 
-const TRANSACAO_VAZIA = {
+const TRANSACAO_VAZIA = { 
   desc: "",
   valor: "",
   categoria: "",

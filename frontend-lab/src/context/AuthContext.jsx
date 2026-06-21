@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { autenticar, buscarPorEmail, cadastrar } from '../services/authService';
 
 const AuthContext = createContext();
+const API_URL = 'http://localhost:3001';
 
 export function AuthProvider({ children }) {
   const [usuarioLogado, setUsuarioLogado] = useState(null);
@@ -22,7 +22,12 @@ export function AuthProvider({ children }) {
 
   async function login(email, senha) {
     try {
-      const usuarios = await autenticar(email, senha);
+      const res = await fetch(
+        `${API_URL}/usuarios?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`
+      );
+      if (!res.ok) throw new Error('Falha ao conectar com o servidor.');
+
+      const usuarios = await res.json();
 
       if (usuarios.length === 0) {
         return { sucesso: false, erro: 'E-mail ou senha incorretos.' };
@@ -36,23 +41,38 @@ export function AuthProvider({ children }) {
 
       return { sucesso: true };
     } catch (error) {
-      return { sucesso: false, erro: error.message };
+      return {
+        sucesso: false,
+        erro: 'Não foi possível conectar ao servidor. Verifique se o json-server está rodando (npm run server).',
+      };
     }
   }
 
   async function cadastrarUsuario(dados) {
     try {
       // Verifica se já existe um usuário com esse e-mail
-      const existentes = await buscarPorEmail(dados.email);
+      const verifica = await fetch(`${API_URL}/usuarios?email=${encodeURIComponent(dados.email)}`);
+      if (!verifica.ok) throw new Error('Falha ao conectar com o servidor.');
+
+      const existentes = await verifica.json();
       if (existentes.length > 0) {
         return { sucesso: false, erro: 'Já existe uma conta com esse e-mail.' };
       }
 
-      await cadastrar(dados);
+      const res = await fetch(`${API_URL}/usuarios`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dados),
+      });
+
+      if (!res.ok) throw new Error('Falha ao cadastrar usuário.');
 
       return { sucesso: true };
     } catch (error) {
-      return { sucesso: false, erro: error.message };
+      return {
+        sucesso: false,
+        erro: 'Não foi possível conectar ao servidor. Verifique se o json-server está rodando (npm run server).',
+      };
     }
   }
 

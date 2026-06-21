@@ -73,7 +73,7 @@ function GraficoSaldo() {
             />
           </AreaChart>
         </ResponsiveContainer>
-      </section>
+      </section> 
     </article>
   );
 }
