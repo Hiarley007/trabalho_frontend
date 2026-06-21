@@ -14,13 +14,16 @@ const CATEGORIAS = [
   "Receitas",
 ];
 
-const TRANSACAO_VAZIA = { 
+const TRANSACAO_VAZIA = {
   desc: "",
   valor: "",
   categoria: "",
   tipo: "",
   data: "",
 };
+
+// Data de hoje no formato YYYY-MM-DD (usada para limitar o campo de data)
+const HOJE = new Date().toISOString().split("T")[0];
 
 function CadastroTransition() {
   const { usuarioLogado } = useAuth();
@@ -74,6 +77,8 @@ function CadastroTransition() {
     }
     if (!transacao.data) {
       novosErros.data = "A data é obrigatória.";
+    } else if (transacao.data > HOJE) {
+      novosErros.data = "A data não pode ser futura.";
     }
 
     setErros(novosErros);
@@ -217,6 +222,7 @@ function CadastroTransition() {
             <input
               type="date"
               value={transacao.data}
+              max={HOJE}
               onChange={(e) => handleChange("data", e.target.value)}
               className={`w-full px-4 py-2 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-green-500 ${
                 erros.data ? "border-red-400" : "border-gray-300"
@@ -304,4 +310,4 @@ function CadastroTransition() {
   );
 }
 
-export default CadastroTransition; 
+export default CadastroTransition;

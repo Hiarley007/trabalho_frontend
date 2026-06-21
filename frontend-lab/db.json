@@ -38,6 +38,33 @@
       "data": "2026-06-10",
       "usuarioId": "bMw55ssk0pU",
       "id": "roWyM20VqYA"
+    },
+    {
+      "desc": "Plano de Saude",
+      "valor": 2500,
+      "categoria": "Saúde",
+      "tipo": "despesa",
+      "data": "2026-05-20",
+      "usuarioId": 1,
+      "id": "1TVczkiXJTA"
+    },
+    {
+      "desc": "Plano de Saude",
+      "valor": 2500,
+      "categoria": "Saúde",
+      "tipo": "despesa",
+      "data": "2026-06-01",
+      "usuarioId": 1,
+      "id": "0Ntk7W8Ukd4"
+    },
+    {
+      "desc": "Plano de Saude",
+      "valor": 2500,
+      "categoria": "Saúde",
+      "tipo": "despesa",
+      "data": "2026-06-08",
+      "usuarioId": "bMw55ssk0pU",
+      "id": "7NnRoHNznUE"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
