@@ -151,6 +151,15 @@
       "data": "2026-06-09",
       "usuarioId": 1,
       "id": "RUukj4A_GEc"
+    },
+    {
+      "desc": "Conta Luz",
+      "valor": 2000,
+      "categoria": "Moradia",
+      "tipo": "despesa",
+      "data": "2026-06-07",
+      "usuarioId": 1,
+      "id": "KLkjm3blAvI"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

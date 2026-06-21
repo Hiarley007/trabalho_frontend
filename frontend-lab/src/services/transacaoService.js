@@ -1,4 +1,4 @@
-const url = "http://localhost:3000/transacoes";
+const url = "http://localhost:3001/transacoes";
 
 // POST /
 async function criar(transacao) {
