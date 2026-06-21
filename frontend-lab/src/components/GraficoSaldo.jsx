@@ -1,6 +1,23 @@
 import { XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart } from "recharts";
 import { useFinance } from "../hooks/useFinance";
 
+function TooltipCustomizado({ active, payload, label }) {
+  if (!active || !payload || !payload.length) return null;
+
+  const transacao = payload[0].payload;
+  const isReceita = transacao.tipo === "receita";
+
+  return (
+    <div className="bg-white rounded-lg shadow-md border border-gray-100 p-3">
+      <p className="text-sm text-gray-500 mb-1">{label}</p>
+      <p className={`font-bold ${isReceita ? "text-green-600" : "text-red-600"}`}>
+        R$ {transacao.valor.toLocaleString("pt-BR")}
+      </p>
+      <p className="text-xs text-gray-400 capitalize">{transacao.tipo}</p>
+    </div>
+  );
+}
+
 function GraficoSaldo() {
   const { transacoes, loading } = useFinance();
 
@@ -45,7 +62,7 @@ function GraficoSaldo() {
               axisLine={false}
               tickLine={false}
             />
-            <Tooltip formatter={(v) => `R$ ${v.toLocaleString("pt-BR")}`} />
+            <Tooltip content={<TooltipCustomizado />} />
             <Area
               type="monotone"
               dataKey="valor"
@@ -56,7 +73,7 @@ function GraficoSaldo() {
             />
           </AreaChart>
         </ResponsiveContainer>
-      </section>
+      </section> 
     </article>
   );
 }

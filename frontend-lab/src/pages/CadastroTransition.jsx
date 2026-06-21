@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import Main from "../components/Main";
 import { criar, obter, atualizar } from "../services/transacaoService";
+import { useAuth } from "../context/AuthContext";
 
 const CATEGORIAS = [
   "Moradia",
@@ -13,7 +14,7 @@ const CATEGORIAS = [
   "Receitas",
 ];
 
-const TRANSACAO_VAZIA = {
+const TRANSACAO_VAZIA = { 
   desc: "",
   valor: "",
   categoria: "",
@@ -22,6 +23,7 @@ const TRANSACAO_VAZIA = {
 };
 
 function CadastroTransition() {
+  const { usuarioLogado } = useAuth();
   const [transacao, setTransacao] = useState(TRANSACAO_VAZIA);
   const [erros, setErros] = useState({});
   const [salvando, setSalvando] = useState(false);
@@ -95,7 +97,7 @@ function CadastroTransition() {
     const payload = {
       ...transacao,
       valor: Number(transacao.valor),
-      usuarioId: 1,
+      usuarioId: usuarioLogado?.id,
     };
 
     try {
@@ -302,4 +304,4 @@ function CadastroTransition() {
   );
 }
 
-export default CadastroTransition;
+export default CadastroTransition; 
