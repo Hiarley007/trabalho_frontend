@@ -9,7 +9,7 @@ Visualize saldos, gerencie transações e acompanhe seus gastos com gráficos in
 
 ![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=white&labelColor=20232A)
 ![Vite](https://img.shields.io/badge/Vite-5-646CFF?style=flat-square&logo=vite&logoColor=white&labelColor=1a1a2e)
-![Docker](https://img.shields.io/badge/Docker-ready-2496ED?style=flat-square&logo=docker&logoColor=white&labelColor=1d3557)
+![json-server](https://img.shields.io/badge/json--server-API-yellow?style=flat-square&logo=json&logoColor=white&labelColor=1a1a2e)
 ![ESLint](https://img.shields.io/badge/ESLint-configured-4B32C3?style=flat-square&logo=eslint&logoColor=white&labelColor=1a1a2e)
 
 ### 👥 Equipe
@@ -31,21 +31,24 @@ git clone https://github.com/seu-usuario/frontend-lab.git
 
 # Entre na pasta e instale as dependências
 cd frontend-lab && npm install
+```
 
-# Inicie o servidor de desenvolvimento
+A aplicação precisa de **dois terminais abertos ao mesmo tempo**: um para a API simulada (`json-server`) e outro para o servidor de desenvolvimento do Vite.
+
+```bash
+# Terminal 1 — inicia a API simulada (json-server lendo o db.json)
+npm run server
+```
+
+```bash
+# Terminal 2 — inicia o servidor de desenvolvimento do Vite
 npm run dev
 ```
 
-✅ Acesse em **http://localhost:5173**
+✅ Acesse a aplicação em **http://localhost:5173**
+✅ A API estará disponível em **http://localhost:3000** (ou na porta configurada no script `server`)
 
-<details>
-<summary>🐳 Prefere usar Docker?</summary>
-
-```bash
-docker-compose up --build
-```
-
-</details>
+> ⚠️ Se a tela de listagem ou o dashboard aparecerem vazios, confira se o terminal do `npm run server` está rodando — sem ele, a aplicação não consegue buscar nem salvar dados.
 
 ---
 
@@ -55,39 +58,45 @@ docker-compose up --build
 frontend-lab/
 │
 ├── 📂 src/
-│   ├── 📂 assets/              # Imagens e recursos estáticos
+│   ├── 📂 assets/                # Imagens e recursos estáticos
 │   │
-│   ├── 📂 components/          # Componentes reutilizáveis
-│   │   ├── Card.jsx            # Card genérico de conteúdo
-│   │   ├── GraficoPizza.jsx    # Gráfico de distribuição por categoria
-│   │   ├── GraficoSaldo.jsx    # Gráfico de evolução do saldo
-│   │   ├── Main.jsx            # Container principal da página
-│   │   ├── Menu.jsx            # Menu de navegação
-│   │   ├── ResumoTrasition.jsx # Resumo animado de transações
-│   │   ├── Sidebar.jsx         # Barra lateral de navegação
-│   │   └── Topbar.jsx          # Barra superior com ações globais
+│   ├── 📂 components/            # Componentes reutilizáveis
+│   │   ├── Card.jsx              # Card genérico de conteúdo
+│   │   ├── GraficoPizza.jsx      # Gráfico de distribuição por categoria
+│   │   ├── GraficoSaldo.jsx      # Gráfico de evolução do saldo
+│   │   ├── Main.jsx              # Container principal da página
+│   │   ├── Menu.jsx              # Menu de navegação
+│   │   ├── ResumoTrasition.jsx   # Resumo animado de transações
+│   │   ├── Sidebar.jsx           # Barra lateral de navegação
+│   │   └── Topbar.jsx            # Barra superior com ações globais
 │   │
 │   ├── 📂 context/
-│   │   └── FinanceContext.jsx  # Estado global das finanças (Context API)
+│   │   ├── AuthContext.jsx       # Estado global de autenticação (login/logout)
+│   │   └── FinanceContext.jsx    # Estado global das finanças (Context API)
+│   │
+│   ├── 📂 hooks/                 # Hooks customizados (ex: useFinance)
 │   │
 │   ├── 📂 Layouts/
-│   │   └── Layout.jsx          # Layout base com Sidebar + Topbar
+│   │   └── Layout.jsx            # Layout base com Sidebar + Topbar
 │   │
-│   ├── 📂 pages/               # Telas da aplicação
-│   │   ├── Login.jsx           # Autenticação
-│   │   ├── Dashboard.jsx       # Visão geral com gráficos
-│   │   ├── Cadastro.jsx        # Cadastro de usuário
+│   ├── 📂 pages/                 # Telas da aplicação
+│   │   ├── Login.jsx             # Autenticação
+│   │   ├── Cadastro.jsx          # Cadastro de usuário
+│   │   ├── Dashboard.jsx         # Visão geral com gráficos
 │   │   ├── CadastroTransition.jsx    # Cadastro de transação
 │   │   ├── ListagemTransition.jsx    # Listagem de transações
-│   │   └── Erro404.jsx         # Página de erro
+│   │   └── Erro404.jsx           # Página de erro
 │   │
-│   ├── 📂 services/            # Chamadas à API / json-server
+│   ├── 📂 services/              # Chamadas à API / json-server
+│   │   └── transacaoService.js   # CRUD de transações
+│   │
 │   ├── App.jsx
 │   └── main.jsx
 │
-├── db.json                     # Banco de dados local (json-server)
-├── docker-compose.yml
-├── Dockerfile
+├── db.json                       # Banco de dados local (json-server)
+├── eslint.config.js
+├── index.html
+├── package.json
 └── vite.config.js
 ```
 
@@ -135,7 +144,7 @@ git checkout -b feature/tela-dashboard
 ```
 <tipo>: mensagem curta descrevendo o que foi feito
 ```
- 
+
 ### Tipos disponíveis
 
 | Tipo | Quando usar | Exemplo |
@@ -186,9 +195,8 @@ git push origin feature/tela-<nome>
 | [React 18](https://react.dev/) | Interface e componentização |
 | [Vite](https://vitejs.dev/) | Build e servidor de desenvolvimento |
 | [React Router](https://reactrouter.com/) | Navegação entre telas |
-| [Context API](https://react.dev/reference/react/createContext) | Gerenciamento de estado global |
+| [Context API](https://react.dev/reference/react/createContext) | Gerenciamento de estado global (autenticação e finanças) |
 | [json-server](https://github.com/typicode/json-server) | API simulada via `db.json` |
-| [Docker](https://www.docker.com/) | Containerização do ambiente |
 | [ESLint](https://eslint.org/) | Qualidade e padronização de código |
 
 ---
@@ -204,4 +212,4 @@ Distribuído sob a licença **MIT**. Veja o arquivo `LICENSE` para mais detalhes
 Desenvolvido no **Centro Universitário IESB**
 Disciplina de Construção de Frontend · 2026
 
-</div>
+</div> 
