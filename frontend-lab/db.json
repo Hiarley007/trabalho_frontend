@@ -1,7 +1,7 @@
 {
   "usuarios": [
     {
-      "id": "63Y8QZmCArU"
+      "id": "22wZwxtTy0A"
     },
     {
       "nome": "Hiarley",
@@ -12,122 +12,23 @@
       "cidade": "Brasília",
       "estado": "DF",
       "senha": "@Hmr2007",
-      "id": "LfyQkZzXzsw"
+      "id": "my1VKGpU1TM"
     },
     {
-      "nome": "Kathia Matos De Faria",
-      "email": "kathia.faria@iesb.edu.br",
-      "telefone": "(61) 99438-9575",
-      "dataNascimento": "1996-03-26",
-      "genero": "feminino",
-      "cidade": "Brasilia",
-      "estado": "DF",
-      "senha": "Kmf26031996",
-      "id": "bMw55ssk0pU"
+      "nome": "jubileu",
+      "email": "jubileu@gmail.com",
+      "telefone": "(85) 2852-8522",
+      "dataNascimento": "1978-05-20",
+      "genero": "masculino",
+      "cidade": "Brasília",
+      "estado": "MG",
+      "senha": "@JUB1234",
+      "id": "k3ZfaAko-tU"
     }
   ],
   "transacoes": [
     {
-      "id": "_RGBtsbu57w"
-    },
-    {
-      "desc": "Cabelereiro",
-      "valor": 320,
-      "categoria": "Lazer",
-      "tipo": "despesa",
-      "data": "2026-06-10",
-      "usuarioId": "bMw55ssk0pU",
-      "id": "roWyM20VqYA"
-    },
-    {
-      "desc": "Salário",
-      "valor": 2000,
-      "categoria": "Receitas",
-      "tipo": "receita",
-      "data": "2026-06-25",
-      "usuarioId": "LfyQkZzXzsw",
-      "id": "CmjorIRf7IQ"
-    },
-    {
-      "desc": "Aluguel",
-      "valor": 1500,
-      "categoria": "Moradia",
-      "tipo": "despesa",
-      "data": "2026-06-15",
-      "usuarioId": "LfyQkZzXzsw",
-      "id": "d6XCX8pOD8s"
-    },
-    {
-      "desc": "Mercado",
-      "valor": 335,
-      "categoria": "Alimentação",
-      "tipo": "despesa",
-      "data": "2026-06-07",
-      "usuarioId": "LfyQkZzXzsw",
-      "id": "KxmmBb77dqM"
-    },
-    {
-      "desc": "Salário",
-      "valor": 1600,
-      "categoria": "Receitas",
-      "tipo": "receita",
-      "data": "2026-06-25",
-      "usuarioId": "LfyQkZzXzsw",
-      "id": "UXI0I8RKxF4"
-    },
-    {
-      "desc": "Salário",
-      "valor": 2000,
-      "categoria": "Receitas",
-      "tipo": "receita",
-      "data": "2026-06-21",
-      "usuarioId": "LfyQkZzXzsw",
-      "id": "ijwZAxvATsY"
-    },
-    {
-      "desc": "Lazer",
-      "valor": 1500,
-      "categoria": "Lazer",
-      "tipo": "despesa",
-      "data": "2026-06-21",
-      "usuarioId": "LfyQkZzXzsw",
-      "id": "wZZx2eAQBfs"
-    },
-    {
-      "desc": "Mercado",
-      "valor": 1500,
-      "categoria": "Alimentação",
-      "tipo": "despesa",
-      "data": "2026-06-21",
-      "usuarioId": "LfyQkZzXzsw",
-      "id": "x0Jl46nVItw"
-    },
-    {
-      "desc": "Academia",
-      "valor": 139.9,
-      "categoria": "Saúde",
-      "tipo": "despesa",
-      "data": "2026-06-10",
-      "usuarioId": "LfyQkZzXzsw",
-      "id": "CUpQJZdwrGo"
-    },
-    {
-      "desc": "Spotfy",
-      "valor": 12.9,
-      "categoria": "Lazer",
-      "tipo": "despesa",
-      "data": "2026-06-10",
-      "usuarioId": "LfyQkZzXzsw",
-      "id": "gEL0VaHDC9M"
-    },
-    {
-      "desc": "Lazer",
-      "valor": 20,
-      "categoria": "Alimentação",
-      "tipo": "despesa",
-      "data": "2026-06-14",
-      "usuarioId": "LfyQkZzXzsw",
-      "id": "cZbyS5oQl5I"
+      "id": "i6yCjywu3kg"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

@@ -43,7 +43,7 @@ export function AuthProvider({ children }) {
     } catch (error) {
       return {
         sucesso: false,
-        erro: 'Não foi possível conectar ao servidor. Verifique se o json-server está rodando (npm run server).',
+        erro: 'Não foi possível conectar ao servidor.',
       };
     }
   }

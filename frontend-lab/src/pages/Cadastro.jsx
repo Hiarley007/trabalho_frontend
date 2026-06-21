@@ -2,11 +2,10 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import logo from '../assets/logo_site(3).svg';
-import login from '../pages/Login'
 
 const ESTADO_INICIAL = {
   nome: '', email: '', telefone: '', dataNascimento: '',
-  genero: '', cidade: '', estado: '', senha: '', confirmarSenha: '', aceitaTermos: false,
+  genero: '', cidade: '', estado: '', senha: '', confirmarSenha: '',
 };
 
 const ESTADOS_BR = [
@@ -70,7 +69,6 @@ function Cadastro() {
     else if (!/(?=.*[A-Z])(?=.*[0-9])/.test(form.senha)) e.senha = 'Use 1 maiúscula e 1 número.';
     if (!form.confirmarSenha) e.confirmarSenha = 'Confirme sua senha.';
     else if (form.senha !== form.confirmarSenha) e.confirmarSenha = 'As senhas não coincidem.';
-    if (!form.aceitaTermos) e.aceitaTermos = 'Aceite os termos para continuar.';
     return e;
   };
 
@@ -87,13 +85,13 @@ function Cadastro() {
     if (Object.keys(e).length > 0) { setErros(e); return; }
 
     setCarregando(true);
-    const { confirmarSenha, aceitaTermos, ...dados } = form;
+    const { confirmarSenha, ...dados } = form;
     const resultado = await cadastrarUsuario(dados);
     setCarregando(false);
 
     if (resultado.sucesso) {
       setSucesso(true);
-      setTimeout(() => navigate({login}, { replace: true }), 2000);
+      setTimeout(() => navigate('/login', { replace: true }), 2000);
     } else {
       setErroGeral(resultado.erro);
       setEtapa(2);
@@ -261,7 +259,7 @@ function Cadastro() {
                         placeholder="(00) 00000-0000" maxLength={15} className={inputClass('telefone', true)} />
                     </span>
                     {erros.telefone && <span className="text-xs text-red-500 font-medium">{erros.telefone}</span>}
-                  </fieldset> 
+                  </fieldset>
                 </li>
 
                 <li>
@@ -419,22 +417,6 @@ function Cadastro() {
                       </button>
                     </span>
                     {erros.confirmarSenha && <span className="text-xs text-red-500 font-medium">{erros.confirmarSenha}</span>}
-                  </fieldset>
-                </li>
-
-                <li className="sm:col-span-2">
-                  <fieldset className="flex flex-col gap-1 border-none p-0 m-0">
-                    <label className="flex items-start gap-3 cursor-pointer">
-                      <input type="checkbox" name="aceitaTermos" checked={form.aceitaTermos} onChange={handleChange}
-                        className="mt-0.5 w-4 h-4 accent-emerald-700 cursor-pointer" />
-                      <span className="text-sm text-gray-700">
-                        Li e aceito os{' '}
-                        <a href="#termos" className="text-emerald-700 font-semibold hover:underline">Termos de Uso</a>
-                        {' '}e a{' '}
-                        <a href="#privacidade" className="text-emerald-700 font-semibold hover:underline">Política de Privacidade</a>
-                      </span>
-                    </label>
-                    {erros.aceitaTermos && <span className="text-xs text-red-500 font-medium">{erros.aceitaTermos}</span>}
                   </fieldset>
                 </li>
               </ol>
