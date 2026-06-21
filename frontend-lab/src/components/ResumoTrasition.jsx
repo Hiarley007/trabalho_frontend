@@ -80,7 +80,7 @@ function ResumoTransition() {
   };
 
   return (
-    <section className="bg-white rounded-2xl p-5 shadow-sm mt-5">
+    <section className="bg-white rounded-2xl p-4 sm:p-5 shadow-sm mt-5">
       <header className="flex items-center justify-between mb-4">
         <h2 className="font-bold text-lg">Últimas transações</h2>
         <button
@@ -99,24 +99,51 @@ function ResumoTransition() {
         ) : (
           ultimasTransacoes.map((t) => {
             const cat = icones[t.categoria] || { bg: "bg-gray-400", icone: "💸" };
+            const dataFormatada = new Date(t.data + "T00:00:00")
+              .toLocaleDateString("pt-BR", { day: "2-digit", month: "short" })
+              .replace(".", "");
+
             return (
-              <li key={t.id} className="flex items-center gap-4 py-3">
-                <figure className={`w-9 h-9 rounded-xl ${cat.bg} flex items-center justify-center text-white text-sm flex-shrink-0 m-0`}>
+              <li
+                key={t.id}
+                className="flex items-center gap-3 sm:gap-4 py-3"
+              >
+                <figure
+                  className={`w-9 h-9 rounded-xl ${cat.bg} flex items-center justify-center text-white text-sm flex-shrink-0 m-0`}
+                >
                   {cat.icone}
                 </figure>
-                <span className="flex-1 text-sm font-medium text-gray-800">
-                  {t.desc}
-                </span>
-                <span className={`text-xs font-semibold ${t.tipo === "receita" ? "text-green-600" : "text-red-500"}`}>
+
+                {/* Descrição + tipo/data (empilhados no mobile) */}
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-800 truncate">
+                    {t.desc}
+                  </p>
+                  <p className="flex items-center gap-2 mt-0.5 sm:hidden">
+                    <span
+                      className={`text-xs font-semibold ${t.tipo === "receita" ? "text-green-600" : "text-red-500"}`}
+                    >
+                      {t.tipo === "receita" ? "Receita" : "Despesa"}
+                    </span>
+                    <span className="text-xs text-gray-400">
+                      {dataFormatada}
+                    </span>
+                  </p>
+                </div>
+
+                {/* Tipo e data: só aparecem como colunas separadas a partir de sm */}
+                <span
+                  className={`hidden sm:inline text-xs font-semibold ${t.tipo === "receita" ? "text-green-600" : "text-red-500"}`}
+                >
                   {t.tipo === "receita" ? "Receita" : "Despesa"}
                 </span>
-                <span className="text-xs text-gray-400 w-24 text-center">
-                  {new Date(t.data + "T00:00:00").toLocaleDateString("pt-BR", {
-                    day: "2-digit",
-                    month: "short",
-                  }).replace(".", "")}
+                <span className="hidden sm:inline text-xs text-gray-400 w-20 sm:w-24 text-center">
+                  {dataFormatada}
                 </span>
-                <span className={`text-sm font-bold w-28 text-right font-mono ${t.tipo === "receita" ? "text-green-600" : "text-red-500"}`}>
+
+                <span
+                  className={`text-sm font-bold text-right font-mono whitespace-nowrap ${t.tipo === "receita" ? "text-green-600" : "text-red-500"}`}
+                >
                   {t.tipo === "despesa" ? "-" : ""}R${" "}
                   {t.valor.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                 </span>

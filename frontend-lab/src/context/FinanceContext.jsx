@@ -1,9 +1,8 @@
 import { createContext, useState, useEffect, useMemo } from "react";
 import { useAuth } from "./AuthContext";
+import { API_URL } from "../services/api";
 
 const FinanceContext = createContext();
-
-const API_URL = "http://localhost:3001";
 
 function FinanceProvider({ children }) {
   const { usuarioLogado } = useAuth();
@@ -13,27 +12,28 @@ function FinanceProvider({ children }) {
 
   useEffect(() => {
     async function fetchTransacoes() {
-      // Sem usuário logado, não busca nada
+      // Sem usuário logado: não há o que buscar.
       if (!usuarioLogado) {
         setTransacoes([]);
         setLoading(false);
         return;
       }
 
+      setLoading(true);
       try {
-        setLoading(true);
         const res  = await fetch(`${API_URL}/transacoes?usuarioId=${usuarioLogado.id}`);
         const data = await res.json();
         setTransacoes(data);
       } catch (error) {
         console.error("Erro ao buscar transações:", error);
+        setTransacoes([]);
       } finally {
         setLoading(false);
       }
     }
 
     fetchTransacoes();
-  }, [usuarioLogado]); // refaz a busca sempre que o usuário logado mudar (login/logout/troca de conta)
+  }, [usuarioLogado]);
 
   const getMes = (dataStr) => {
     const [, mes] = dataStr.split("-");

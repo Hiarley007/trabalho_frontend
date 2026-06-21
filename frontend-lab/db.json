@@ -13,6 +13,39 @@
       "estado": "DF",
       "senha": "@Hmr2007",
       "id": "LfyQkZzXzsw"
+    },
+    {
+      "nome": "Flávia Monteiro de Paula",
+      "email": "flaviamontt409@gmail.com",
+      "telefone": "(99) 98174-0321",
+      "dataNascimento": "2007-07-30",
+      "genero": "masculino",
+      "cidade": "Brasília",
+      "estado": "DF",
+      "senha": "@Fmp123456",
+      "id": "DufKrU_QCq8"
+    },
+    {
+      "nome": "Jubileu",
+      "email": "jubileu@gmail.com",
+      "telefone": "(85) 2852-8525",
+      "dataNascimento": "1988-02-15",
+      "genero": "masculino",
+      "cidade": "Caxias",
+      "estado": "MA",
+      "senha": "@Jubileu1234",
+      "id": "bQRN7vnlC0E"
+    },
+    {
+      "nome": "Hiarley Rabêlo",
+      "email": "hiarley307@gmail.com",
+      "telefone": "(99) 98464-4270",
+      "dataNascimento": "2007-07-30",
+      "genero": "masculino",
+      "cidade": "Brasília",
+      "estado": "DF",
+      "senha": "@HMR2007",
+      "id": "EzQW36QONn0"
     }
   ],
   "transacoes": [
@@ -108,6 +141,42 @@
       "data": "2026-06-14",
       "usuarioId": "LfyQkZzXzsw",
       "id": "vAjE_iE1z6U"
+    },
+    {
+      "desc": "Salário",
+      "valor": 1580,
+      "categoria": "Receitas",
+      "tipo": "receita",
+      "data": "2026-06-21",
+      "usuarioId": "EzQW36QONn0",
+      "id": "Stgv_D_pTQw"
+    },
+    {
+      "desc": "Mercado",
+      "valor": 335,
+      "categoria": "Alimentação",
+      "tipo": "despesa",
+      "data": "2026-06-07",
+      "usuarioId": "EzQW36QONn0",
+      "id": "K88hkWH2jcY"
+    },
+    {
+      "desc": "Academia",
+      "valor": 139.9,
+      "categoria": "Saúde",
+      "tipo": "despesa",
+      "data": "2026-06-10",
+      "usuarioId": "EzQW36QONn0",
+      "id": "PjbB0WbUfzo"
+    },
+    {
+      "desc": "Spotfy",
+      "valor": 12.9,
+      "categoria": "Lazer",
+      "tipo": "despesa",
+      "data": "2026-06-10",
+      "usuarioId": "EzQW36QONn0",
+      "id": "SvfWYx6dmsc"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

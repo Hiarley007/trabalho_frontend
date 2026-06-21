@@ -3,7 +3,6 @@ import { useNavigate, useSearchParams } from "react-router";
 import Main from "../components/Main";
 import { criar, obter, atualizar } from "../services/transacaoService";
 import { useAuth } from "../context/AuthContext";
-import { useFinance } from "../hooks/useFinance";
 
 const CATEGORIAS = [
   "Moradia",
@@ -24,6 +23,7 @@ const TRANSACAO_VAZIA = {
 };
 
 function CadastroTransition() {
+  const { usuarioLogado } = useAuth();
   const [transacao, setTransacao] = useState(TRANSACAO_VAZIA);
   const [erros, setErros] = useState({});
   const [salvando, setSalvando] = useState(false);
@@ -32,9 +32,6 @@ function CadastroTransition() {
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
   const modoEdicao = Boolean(id);
-
-  const { usuarioLogado } = useAuth();
-  const { transacoes, setTransacoes } = useFinance();
 
   // ─── Carregar transação ao editar ────────────────────────────────────────────
   useEffect(() => {
@@ -94,25 +91,20 @@ function CadastroTransition() {
     e.preventDefault();
 
     if (!validar()) return;
-    if (!usuarioLogado) return;
 
     setSalvando(true);
 
     const payload = {
       ...transacao,
       valor: Number(transacao.valor),
-      usuarioId: usuarioLogado.id,
+      usuarioId: usuarioLogado?.id,
     };
 
     try {
       if (modoEdicao) {
-        const atualizada = await atualizar({ ...payload, id });
-        setTransacoes(
-          transacoes.map((t) => (t.id === id ? atualizada : t))
-        );
+        await atualizar({ ...payload, id });
       } else {
-        const criada = await criar(payload);
-        setTransacoes([...transacoes, criada]);
+        await criar(payload);
       }
       navigate("/listagem");
     } catch (erro) {
@@ -132,6 +124,7 @@ function CadastroTransition() {
         className="bg-white rounded-xl shadow-sm p-6 md:p-8"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
+          {/* Descrição */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Descrição <span className="text-red-500">*</span>
@@ -150,6 +143,7 @@ function CadastroTransition() {
             )}
           </div>
 
+          {/* Valor */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Valor (R$) <span className="text-red-500">*</span>
@@ -170,6 +164,7 @@ function CadastroTransition() {
             )}
           </div>
 
+          {/* Categoria */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Categoria <span className="text-red-500">*</span>
@@ -193,6 +188,7 @@ function CadastroTransition() {
             )}
           </div>
 
+          {/* Tipo */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Tipo <span className="text-red-500">*</span>
@@ -213,6 +209,7 @@ function CadastroTransition() {
             )}
           </div>
 
+          {/* Data */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Data <span className="text-red-500">*</span>
@@ -231,6 +228,7 @@ function CadastroTransition() {
           </div>
         </div>
 
+        {/* Aviso de campos obrigatórios */}
         <div className="flex items-center gap-2 bg-green-50 text-green-700 text-sm rounded-lg px-4 py-3 mt-6">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -250,6 +248,7 @@ function CadastroTransition() {
           Campos marcados com <span className="text-red-500 font-medium">*</span> são obrigatórios.
         </div>
 
+        {/* Ações */}
         <div className="flex justify-end gap-3 mt-6">
           <button
             type="button"
@@ -283,6 +282,7 @@ function CadastroTransition() {
         </div>
       </form>
 
+      {/* Dicas */}
       <div className="bg-white rounded-xl shadow-sm p-6 md:p-8 mt-6">
         <h3 className="font-semibold text-gray-800 mb-3">Dicas</h3>
         <ul className="space-y-2 text-sm text-gray-600">
@@ -304,4 +304,4 @@ function CadastroTransition() {
   );
 }
 
-export default CadastroTransition;
+export default CadastroTransition; 
