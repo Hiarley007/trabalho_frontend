@@ -152,7 +152,7 @@ function ListagemTransition() {
 
         {/* Botão Nova Transação */}
         <button
-          onClick={() => navigate("/cadastro")}
+          onClick={() => navigate("/cadastro-transacao")}
           className="flex items-center gap-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors ml-auto"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
