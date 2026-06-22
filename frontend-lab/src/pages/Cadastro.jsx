@@ -123,6 +123,13 @@ function Cadastro() {
             className="w-full rounded-full [&::-webkit-progress-bar]:rounded-full [&::-webkit-progress-bar]:bg-gray-200 [&::-webkit-progress-value]:rounded-full [&::-webkit-progress-value]:bg-emerald-600 h-1.5"
             max="100" value="100"
           />
+          <button
+            type="button"
+            onClick={() => navigate('/login')}
+            className="mt-6 text-sm text-emerald-700 font-semibold hover:underline"
+          >
+            Ir para o login agora →
+          </button>
         </article>
       </main>
     );

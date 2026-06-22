@@ -1,9 +1,6 @@
 {
   "usuarios": [
     {
-      "id": "22wZwxtTy0A"
-    },
-    {
       "nome": "Hiarley",
       "email": "hiarleymorais82@gmail.com",
       "telefone": "(99) 98464-4270",
@@ -29,6 +26,24 @@
   "transacoes": [
     {
       "id": "i6yCjywu3kg"
+    },
+    {
+      "desc": "Salario",
+      "valor": 2000,
+      "categoria": "Receitas",
+      "tipo": "receita",
+      "data": "2000-03-06",
+      "usuarioId": "my1VKGpU1TM",
+      "id": "7nvJgQ5U_54"
+    },
+    {
+      "desc": "Aluguel",
+      "valor": 1500,
+      "categoria": "Moradia",
+      "tipo": "despesa",
+      "data": "2026-06-22",
+      "usuarioId": "my1VKGpU1TM",
+      "id": "oPuEAA_M6J0"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

@@ -1,19 +1,24 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { entrar, cadastrar } from '../services/authService';
 
 const AuthContext = createContext();
-const API_URL = 'http://localhost:3001';
 
 export function AuthProvider({ children }) {
   const [usuarioLogado, setUsuarioLogado] = useState(null);
+  const [token, setToken] = useState(null);
   const [carregandoSessao, setCarregandoSessao] = useState(true);
 
-  // Mantém o usuário logado ao recarregar a página (sessão simples via localStorage)
+  // Restaura a sessão ao recarregar a página
   useEffect(() => {
-    const salvo = localStorage.getItem('usuarioLogado');
-    if (salvo) {
+    const tokenSalvo = localStorage.getItem('token');
+    const usuarioSalvo = localStorage.getItem('usuarioLogado');
+
+    if (tokenSalvo && usuarioSalvo) {
       try {
-        setUsuarioLogado(JSON.parse(salvo));
+        setToken(tokenSalvo);
+        setUsuarioLogado(JSON.parse(usuarioSalvo));
       } catch {
+        localStorage.removeItem('token');
         localStorage.removeItem('usuarioLogado');
       }
     }
@@ -21,69 +26,40 @@ export function AuthProvider({ children }) {
   }, []);
 
   async function login(email, senha) {
-    try {
-      const res = await fetch(
-        `${API_URL}/usuarios?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`
-      );
-      if (!res.ok) throw new Error('Falha ao conectar com o servidor.');
+    const resultado = await entrar({ email, senha });
 
-      const usuarios = await res.json();
-
-      if (usuarios.length === 0) {
-        return { sucesso: false, erro: 'E-mail ou senha incorretos.' };
-      }
-
-      const usuario = usuarios[0];
-      const { senha: _senha, ...usuarioSemSenha } = usuario;
-
-      setUsuarioLogado(usuarioSemSenha);
-      localStorage.setItem('usuarioLogado', JSON.stringify(usuarioSemSenha));
-
-      return { sucesso: true };
-    } catch (error) {
-      return {
-        sucesso: false,
-        erro: 'Não foi possível conectar ao servidor.',
-      };
+    if (!resultado.token) {
+      return { sucesso: false, erro: resultado.mensagem };
     }
+
+    setToken(resultado.token);
+    setUsuarioLogado(resultado.usuario);
+    localStorage.setItem('token', resultado.token);
+    localStorage.setItem('usuarioLogado', JSON.stringify(resultado.usuario));
+
+    return { sucesso: true };
   }
 
   async function cadastrarUsuario(dados) {
-    try {
-      // Verifica se já existe um usuário com esse e-mail
-      const verifica = await fetch(`${API_URL}/usuarios?email=${encodeURIComponent(dados.email)}`);
-      if (!verifica.ok) throw new Error('Falha ao conectar com o servidor.');
+    const resultado = await cadastrar(dados);
 
-      const existentes = await verifica.json();
-      if (existentes.length > 0) {
-        return { sucesso: false, erro: 'Já existe uma conta com esse e-mail.' };
-      }
-
-      const res = await fetch(`${API_URL}/usuarios`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dados),
-      });
-
-      if (!res.ok) throw new Error('Falha ao cadastrar usuário.');
-
-      return { sucesso: true };
-    } catch (error) {
-      return {
-        sucesso: false,
-        erro: 'Não foi possível conectar ao servidor. Verifique se o json-server está rodando (npm run server).',
-      };
+    if (!resultado.sucesso) {
+      return { sucesso: false, erro: resultado.mensagem };
     }
+
+    return { sucesso: true };
   }
 
   function logout() {
     setUsuarioLogado(null);
+    setToken(null);
+    localStorage.removeItem('token');
     localStorage.removeItem('usuarioLogado');
   }
 
   return (
     <AuthContext.Provider
-      value={{ usuarioLogado, carregandoSessao, login, cadastrarUsuario, logout }}
+      value={{ usuarioLogado, token, carregandoSessao, login, cadastrarUsuario, logout }}
     >
       {children}
     </AuthContext.Provider>
