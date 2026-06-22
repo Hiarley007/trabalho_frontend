@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import logo from '../assets/logo_site(3).svg';
 
+
 const ESTADO_INICIAL = {
   nome: '', email: '', telefone: '', dataNascimento: '',
   genero: '', cidade: '', estado: '', senha: '', confirmarSenha: '',
@@ -91,7 +92,7 @@ function Cadastro() {
 
     if (resultado.sucesso) {
       setSucesso(true);
-      setTimeout(() => navigate('/login', { replace: true }), 2000);
+      setTimeout(() => navigate('/login', { replace: true }), 5500);
     } else {
       setErroGeral(resultado.erro);
       setEtapa(2);
@@ -114,10 +115,25 @@ function Cadastro() {
 
   if (sucesso) {
     return (
-      <main className="fixed inset-0 bg-gradient-to-br from-emerald-950 via-green-900 to-emerald-800 flex items-center justify-center px-4 py-12 overflow-hidden">
-        <article className="bg-white rounded-2xl shadow-2xl p-12 text-center max-w-sm w-full">
-          <span className="text-6xl block mb-4">✅</span>
-          <h2 className="text-2xl font-bold text-emerald-700 mb-2">Cadastro realizado!</h2>
+      <main className="fixed inset-0 bg-gradient-to-br from-emerald-950 via-green-900 to-emerald-800 flex items-center justify-center px-4 py-8 sm:py-12 overflow-y-auto">
+        <article className="bg-white rounded-2xl shadow-2xl p-8 sm:p-12 text-center max-w-sm w-full">
+          <span className="flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 rounded-full bg-emerald-100">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-emerald-700"
+            >
+              <path d="M20 6 9 17l-5-5" />
+            </svg>
+          </span>
+          <h2 className="text-xl sm:text-2xl font-bold text-emerald-700 mb-2">Cadastro realizado!</h2>
           <p className="text-gray-500 text-sm mb-6">Redirecionando para o login...</p>
           <progress
             className="w-full rounded-full [&::-webkit-progress-bar]:rounded-full [&::-webkit-progress-bar]:bg-gray-200 [&::-webkit-progress-value]:rounded-full [&::-webkit-progress-value]:bg-emerald-600 h-1.5"
@@ -136,36 +152,36 @@ function Cadastro() {
   }
 
   return (
-    <main className="fixed inset-0 bg-gradient-to-br from-emerald-950 via-green-900 to-emerald-800 flex items-center justify-center px-4 py-12 overflow-hidden">
-      {/* Círculos decorativos */}
+    <main className="fixed inset-0 bg-gradient-to-br from-emerald-950 via-green-900 to-emerald-800 flex items-center justify-center px-3 sm:px-4 py-6 sm:py-12 overflow-y-auto">
+      {/* Círculos decorativos — ocultos em telas muito pequenas para não brigar com o card */}
       <span
-        className="absolute top-[-80px] left-[-60px] w-72 h-72 rounded-full bg-white/10 pointer-events-none"
+        className="hidden sm:block absolute top-[-80px] left-[-60px] w-72 h-72 rounded-full bg-white/10 pointer-events-none"
         aria-hidden="true"
       />
       <span
-        className="absolute bottom-[-40px] right-[-40px] w-56 h-56 rounded-full bg-white/10 pointer-events-none"
+        className="hidden sm:block absolute bottom-[-40px] right-[-40px] w-56 h-56 rounded-full bg-white/10 pointer-events-none"
         aria-hidden="true"
       />
       <span
-        className="absolute bottom-1/3 left-[8%] w-36 h-36 rounded-full bg-white/10 pointer-events-none"
+        className="hidden md:block absolute bottom-1/3 left-[8%] w-36 h-36 rounded-full bg-white/10 pointer-events-none"
         aria-hidden="true"
       />
 
       {/* Card */}
-      <article className="relative z-10 bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-8">
+      <article className="relative z-10 bg-white rounded-2xl shadow-2xl w-full max-w-2xl my-auto p-5 sm:p-8">
 
         {/* Cabeçalho */}
-        <header className="text-center mb-7">
-          <img src={logo} alt="Logo" className="w-80 h-20 mx-auto mb-4 object-contain" />
-          <h1 className="text-2xl font-bold text-gray-900">Novo Cadastro</h1>
-          <p className="text-sm text-gray-500 mt-1">Preencha os dados abaixo com atenção</p>
+        <header className="text-center mb-5 sm:mb-7">
+          <img src={logo} alt="Logo" className="w-48 sm:w-64 md:w-80 h-auto max-h-16 sm:max-h-20 mx-auto mb-3 sm:mb-4 object-contain" />
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Novo Cadastro</h1>
+          <p className="text-xs sm:text-sm text-gray-500 mt-1">Preencha os dados abaixo com atenção</p>
         </header>
 
         {/* Erro geral (ex: e-mail já cadastrado, servidor fora) */}
         {erroGeral && (
           <output
             role="alert"
-            className="flex items-start gap-2 bg-red-50 border border-red-200 text-red-700 text-sm font-medium rounded-lg px-4 py-3 mb-5"
+            className="flex items-start gap-2 bg-red-50 border border-red-200 text-red-700 text-sm font-medium rounded-lg px-3 sm:px-4 py-3 mb-4 sm:mb-5"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -188,27 +204,27 @@ function Cadastro() {
         )}
 
         {/* Indicador de etapas */}
-        <nav aria-label="Etapas do cadastro" className="flex items-center gap-2 mb-8">
-          <span className={`flex items-center gap-2 text-sm font-medium ${etapa >= 1 ? 'text-emerald-700' : 'text-gray-400'}`}>
-            <span className={`w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs font-bold transition-all ${
+        <nav aria-label="Etapas do cadastro" className="flex items-center gap-1.5 sm:gap-2 mb-6 sm:mb-8">
+          <span className={`flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium ${etapa >= 1 ? 'text-emerald-700' : 'text-gray-400'}`}>
+            <span className={`w-6 h-6 sm:w-7 sm:h-7 shrink-0 rounded-full border-2 flex items-center justify-center text-xs font-bold transition-all ${
               etapa > 1 ? 'bg-emerald-700 border-emerald-700 text-white'
               : etapa === 1 ? 'bg-emerald-700 border-emerald-700 text-white'
               : 'border-gray-300 text-gray-400'
             }`}>
               {etapa > 1 ? '✓' : '1'}
             </span>
-            <span className="hidden sm:inline">Dados Pessoais</span>
+            <span className="hidden xs:inline sm:inline">Dados Pessoais</span>
           </span>
 
           <hr className="flex-1 border-t border-gray-200" />
 
-          <span className={`flex items-center gap-2 text-sm font-medium ${etapa >= 2 ? 'text-emerald-700' : 'text-gray-400'}`}>
-            <span className={`w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs font-bold transition-all ${
+          <span className={`flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium ${etapa >= 2 ? 'text-emerald-700' : 'text-gray-400'}`}>
+            <span className={`w-6 h-6 sm:w-7 sm:h-7 shrink-0 rounded-full border-2 flex items-center justify-center text-xs font-bold transition-all ${
               etapa === 2 ? 'bg-emerald-700 border-emerald-700 text-white' : 'border-gray-300 text-gray-400'
             }`}>
               2
             </span>
-            <span className="hidden sm:inline">Localização e Acesso</span>
+            <span className="hidden xs:inline sm:inline">Localização e Acesso</span>
           </span>
         </nav>
 
@@ -304,7 +320,7 @@ function Cadastro() {
 
               <footer className="flex justify-end pt-4 border-t border-gray-100">
                 <button type="button" onClick={avancarEtapa}
-                  className="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-sm rounded-lg px-6 py-2.5 transition active:scale-[0.98]">
+                  className="w-full sm:w-auto bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-sm rounded-lg px-6 py-2.5 transition active:scale-[0.98]">
                   Próximo →
                 </button>
               </footer>
@@ -428,13 +444,13 @@ function Cadastro() {
                 </li>
               </ol>
 
-              <footer className="flex justify-between pt-4 border-t border-gray-100">
+              <footer className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-4 border-t border-gray-100">
                 <button type="button" onClick={() => setEtapa(1)}
-                  className="border border-gray-300 hover:border-emerald-600 hover:text-emerald-700 text-gray-700 font-semibold text-sm rounded-lg px-6 py-2.5 transition">
+                  className="w-full sm:w-auto border border-gray-300 hover:border-emerald-600 hover:text-emerald-700 text-gray-700 font-semibold text-sm rounded-lg px-6 py-2.5 transition">
                   ← Voltar
                 </button>
                 <button type="submit" disabled={carregando}
-                  className="flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold text-sm rounded-lg px-6 py-2.5 transition active:scale-[0.98]">
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-800 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold text-sm rounded-lg px-6 py-2.5 transition active:scale-[0.98]">
                   {carregando ? (
                     <>
                       <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
