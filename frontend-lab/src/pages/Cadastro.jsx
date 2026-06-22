@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -16,6 +16,12 @@ const ESTADOS_BR = [
 function Cadastro() {
   const { cadastrarUsuario } = useAuth();
   const navigate = useNavigate();
+
+  // DEBUG TEMPORÁRIO — remover depois de descobrir o bug
+  useEffect(() => {
+    console.log('CADASTRO MONTOU');
+    return () => console.log('CADASTRO DESMONTOU');
+  }, []);
 
   const [form, setForm] = useState(ESTADO_INICIAL);
   const [erros, setErros] = useState({});
@@ -77,19 +83,38 @@ function Cadastro() {
     window.scrollTo(0, 0);
   };
 
+  // Redireciona para o login depois que o cadastro for concluído com sucesso.
+  // Usar useEffect (em vez de setTimeout solto dentro do handleSubmit) evita
+  // problemas de timing/desmontagem do componente.
+  useEffect(() => {
+    console.log('EFFECT RODOU, sucesso =', sucesso);
+    if (!sucesso) return;
+    console.log('VAI AGENDAR O REDIRECT EM 2s');
+    const timer = setTimeout(() => {
+      console.log('CHAMANDO navigate("/login") AGORA');
+      navigate('/login');
+      console.log('navigate FOI CHAMADO, URL ATUAL:', window.location.pathname);
+    }, 2000);
+    return () => {
+      console.log('LIMPANDO O TIMER (cleanup do effect)');
+      clearTimeout(timer);
+    };
+  }, [sucesso, navigate]);
+
   const handleSubmit = async (ev) => {
     ev.preventDefault();
+    console.log('HANDLESUBMIT CHAMADO');
     const e = validarEtapa2();
-    if (Object.keys(e).length > 0) { setErros(e); return; }
+    if (Object.keys(e).length > 0) { setErros(e); console.log('TEM ERRO DE VALIDACAO', e); return; }
 
     setCarregando(true);
     const { confirmarSenha, aceitaTermos, ...dados } = form;
     const resultado = await cadastrarUsuario(dados);
+    console.log('RESULTADO DO CADASTRO:', resultado);
     setCarregando(false);
 
     if (resultado.sucesso) {
       setSucesso(true);
-      setTimeout(() => navigate('/login'), 2000);
     } else {
       setErroGeral(resultado.erro);
       setEtapa(2);
@@ -107,7 +132,7 @@ function Cadastro() {
 
   const inputClass = (campo) =>
     `w-full px-3 py-2.5 border rounded-lg text-sm text-gray-900 bg-white transition focus:outline-none focus:ring-2 ${
-      erros[campo] ? 'border-red-400 focus:ring-red-300' : 'border-gray-300 focus:ring-blue-400'
+      erros[campo] ? 'border-red-400 focus:ring-red-300' : 'border-gray-300 focus:ring-emerald-500'
     }`;
 
   if (sucesso) {
@@ -121,6 +146,13 @@ function Cadastro() {
             className="w-full rounded-full [&::-webkit-progress-bar]:rounded-full [&::-webkit-progress-bar]:bg-gray-200 [&::-webkit-progress-value]:rounded-full [&::-webkit-progress-value]:bg-green-500 h-1.5"
             max="100" value="100"
           />
+          <button
+            type="button"
+            onClick={() => navigate('/login')}
+            className="mt-6 text-sm text-emerald-700 font-semibold hover:underline"
+          >
+            Ir para o login agora →
+          </button>
         </article>
       </main>
     );
@@ -146,10 +178,10 @@ function Cadastro() {
 
         {/* Indicador de etapas */}
         <nav aria-label="Etapas do cadastro" className="flex items-center gap-2 mb-8">
-          <span className={`flex items-center gap-2 text-sm font-medium ${etapa >= 1 ? 'text-blue-600' : 'text-gray-400'}`}>
+          <span className={`flex items-center gap-2 text-sm font-medium ${etapa >= 1 ? 'text-emerald-700' : 'text-gray-400'}`}>
             <span className={`w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs font-bold transition-all ${
               etapa > 1 ? 'bg-green-500 border-green-500 text-white'
-              : etapa === 1 ? 'bg-blue-600 border-blue-600 text-white'
+              : etapa === 1 ? 'bg-emerald-700 border-emerald-700 text-white'
               : 'border-gray-300 text-gray-400'
             }`}>
               {etapa > 1 ? '✓' : '1'}
@@ -159,9 +191,9 @@ function Cadastro() {
 
           <hr className="flex-1 border-t border-gray-200" />
 
-          <span className={`flex items-center gap-2 text-sm font-medium ${etapa >= 2 ? 'text-blue-600' : 'text-gray-400'}`}>
+          <span className={`flex items-center gap-2 text-sm font-medium ${etapa >= 2 ? 'text-emerald-700' : 'text-gray-400'}`}>
             <span className={`w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs font-bold transition-all ${
-              etapa === 2 ? 'bg-blue-600 border-blue-600 text-white' : 'border-gray-300 text-gray-400'
+              etapa === 2 ? 'bg-emerald-700 border-emerald-700 text-white' : 'border-gray-300 text-gray-400'
             }`}>
               2
             </span>
@@ -228,7 +260,7 @@ function Cadastro() {
 
               <footer className="flex justify-end pt-4 border-t border-gray-100">
                 <button type="button" onClick={avancarEtapa}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-lg px-6 py-2.5 transition active:scale-[0.98]">
+                  className="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-sm rounded-lg px-6 py-2.5 transition active:scale-[0.98]">
                   Próximo →
                 </button>
               </footer>
@@ -291,12 +323,12 @@ function Cadastro() {
                   <fieldset className="flex flex-col gap-1 border-none p-0 m-0">
                     <label className="flex items-start gap-3 cursor-pointer">
                       <input type="checkbox" name="aceitaTermos" checked={form.aceitaTermos} onChange={handleChange}
-                        className="mt-0.5 w-4 h-4 accent-blue-600 cursor-pointer" />
+                        className="mt-0.5 w-4 h-4 accent-emerald-700 cursor-pointer" />
                       <span className="text-sm text-gray-700">
                         Li e aceito os{' '}
-                        <a href="#termos" className="text-blue-600 font-semibold hover:underline">Termos de Uso</a>
+                        <a href="#termos" className="text-emerald-700 font-semibold hover:underline">Termos de Uso</a>
                         {' '}e a{' '}
-                        <a href="#privacidade" className="text-blue-600 font-semibold hover:underline">Política de Privacidade</a>
+                        <a href="#privacidade" className="text-emerald-700 font-semibold hover:underline">Política de Privacidade</a>
                       </span>
                     </label>
                     {erros.aceitaTermos && <span className="text-xs text-red-500">{erros.aceitaTermos}</span>}
@@ -306,11 +338,11 @@ function Cadastro() {
 
               <footer className="flex justify-between pt-4 border-t border-gray-100">
                 <button type="button" onClick={() => setEtapa(1)}
-                  className="border border-gray-300 hover:border-blue-400 hover:text-blue-600 text-gray-700 font-semibold text-sm rounded-lg px-6 py-2.5 transition">
+                  className="border border-gray-300 hover:border-emerald-500 hover:text-emerald-700 text-gray-700 font-semibold text-sm rounded-lg px-6 py-2.5 transition">
                   ← Voltar
                 </button>
                 <button type="submit" disabled={carregando}
-                  className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold text-sm rounded-lg px-6 py-2.5 transition active:scale-[0.98]">
+                  className="flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold text-sm rounded-lg px-6 py-2.5 transition active:scale-[0.98]">
                   {carregando ? (
                     <>
                       <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
