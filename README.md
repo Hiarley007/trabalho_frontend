@@ -87,7 +87,8 @@ frontend-lab/
 │   │   ├── ListagemTransition.jsx    
 │   │   └── Erro404.jsx           
 │   │
-│   ├── 📂 services/              
+│   ├── 📂 services/ 
+|   |   ├── authService.js       
 │   │   └── transacaoService.js   
 │   │
 │   ├── App.jsx
