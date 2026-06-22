@@ -29,6 +29,9 @@ Visualize saldos, gerencie transações e acompanhe seus gastos com gráficos in
 # Clone o repositório
 git clone https://github.com/seu-usuario/frontend-lab.git
 
+# Troque de branch
+git checkout develop ou git switch develop
+
 # Entre na pasta e instale as dependências
 cd frontend-lab && npm install
 ```
