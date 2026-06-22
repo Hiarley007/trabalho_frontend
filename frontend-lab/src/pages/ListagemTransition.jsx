@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Main from "../components/Main";
 import { listar, remover } from "../services/transacaoService";
+import { useAuth } from "../context/AuthContext";
 
 const ITENS_POR_PAGINA = 7;
 
@@ -16,6 +17,7 @@ const CATEGORIAS = [
 ];
 
 function ListagemTransition() {
+  const { usuarioLogado } = useAuth();
   const [transacoes, setTransacoes] = useState([]);
   const [carregando, setCarregando] = useState(true);
 
@@ -26,11 +28,16 @@ function ListagemTransition() {
 
   const navigate = useNavigate();
 
-  // ─── Carregar transações ao montar ───────────────────────────────────────────
+  // ─── Carregar transações ao montar (ou quando o usuário logado mudar) ────────
   useEffect(() => {
+    if (!usuarioLogado?.id) {
+      setCarregando(false);
+      return;
+    }
+
     const carregar = async () => {
       try {
-        const dados = await listar();
+        const dados = await listar(usuarioLogado.id);
         setTransacoes(Array.isArray(dados) ? dados : []);
       } catch (erro) {
         console.error("Erro ao buscar transações:", erro);
@@ -40,7 +47,7 @@ function ListagemTransition() {
       }
     };
     carregar();
-  }, []);
+  }, [usuarioLogado]);
 
   // ─── Remover transação ────────────────────────────────────────────────────────
   const trataRemover = async (transacao) => {
@@ -56,9 +63,8 @@ function ListagemTransition() {
 
   // ─── Filtros ──────────────────────────────────────────────────────────────────
 
-
   const transacoesFiltradas = transacoes.filter((t) => {
-    const buscaOk = t.desc.toLowerCase().includes(busca.toLowerCase());
+    const buscaOk = (t.desc ?? "").toLowerCase().includes(busca.toLowerCase());
     const categoriaOk = filtroCategoria === "todas" || t.categoria === filtroCategoria;
     const tipoOk = filtroTipo === "todos" || t.tipo === filtroTipo;
     return buscaOk && categoriaOk && tipoOk;

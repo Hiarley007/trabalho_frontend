@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import Main from "../components/Main";
 import { criar, obter, atualizar } from "../services/transacaoService";
+import { useAuth } from "../context/AuthContext";
 
 const CATEGORIAS = [
   "Moradia",
@@ -21,7 +22,11 @@ const TRANSACAO_VAZIA = {
   data: "",
 };
 
+// Data de hoje no formato YYYY-MM-DD (usada para limitar o campo de data)
+const HOJE = new Date().toISOString().split("T")[0];
+
 function CadastroTransition() {
+  const { usuarioLogado } = useAuth();
   const [transacao, setTransacao] = useState(TRANSACAO_VAZIA);
   const [erros, setErros] = useState({});
   const [salvando, setSalvando] = useState(false);
@@ -72,6 +77,8 @@ function CadastroTransition() {
     }
     if (!transacao.data) {
       novosErros.data = "A data é obrigatória.";
+    } else if (transacao.data > HOJE) {
+      novosErros.data = "A data não pode ser futura.";
     }
 
     setErros(novosErros);
@@ -95,7 +102,7 @@ function CadastroTransition() {
     const payload = {
       ...transacao,
       valor: Number(transacao.valor),
-      usuarioId: 1,
+      usuarioId: usuarioLogado?.id,
     };
 
     try {
@@ -215,6 +222,7 @@ function CadastroTransition() {
             <input
               type="date"
               value={transacao.data}
+              max={HOJE}
               onChange={(e) => handleChange("data", e.target.value)}
               className={`w-full px-4 py-2 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-green-500 ${
                 erros.data ? "border-red-400" : "border-gray-300"
