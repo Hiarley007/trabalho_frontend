@@ -1,11 +1,23 @@
 {
   "usuarios": [
     {
-      
+      "id": "0fbcRgm7q9Q"
+    },
+    {
+      "nome": "Hiarley Morais",
+      "email": "hiarleymorais82@gmail.com",
+      "telefone": "(99) 98464-4270",
+      "dataNascimento": "2007-07-30",
+      "genero": "masculino",
+      "cidade": "Brasília",
+      "estado": "DF",
+      "senha": "@Hmr2007",
+      "id": "GDhexdNjds0"
     }
   ],
   "transacoes": [
     {
+      "id": "IzM-MgjgVKc"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
